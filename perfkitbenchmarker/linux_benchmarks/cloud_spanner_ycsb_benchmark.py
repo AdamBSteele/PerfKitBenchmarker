@@ -74,6 +74,12 @@ CLIENT_TAR_URL = {
 FLAGS = flags.FLAGS
 flags.DEFINE_enum('cloud_spanner_ycsb_client_type', 'java', ['java', 'go'],
                   'The type of the client.')
+flags.DEFINE_string('cloud_spanner_instance_name', None,
+                    'Spanner instance name. If not specified, new instance '
+                    'will be created and deleted on the fly.')
+flags.DEFINE_string('cloud_spanner_static_table_name', None,
+                    'Spanner table name. If not specified, a temporary table '
+                    'will be created and deleted on the fly.')
 flags.DEFINE_integer('cloud_spanner_ycsb_batchinserts',
                      1,
                      'The Cloud Spanner batch inserts used in the YCSB '
@@ -101,6 +107,17 @@ def CheckPrerequisites(benchmark_config):
   for scope in REQUIRED_SCOPES:
     if scope not in FLAGS.gcloud_scopes:
       raise ValueError('Scope {0} required.'.format(scope))
+  # TODO: extract from gcloud config if available.
+  if FLAGS.cloud_spanner_instance_name:
+    instance = gcp_spanner.GcpSpannerInstance(
+                  name=FLAGS.cloud_spanner_instance_name,
+                  description=BENCHMARK_DESCRIPTION,
+                  database=BENCHMARK_DATABASE,
+                  ddl=BENCHMARK_SCHEMA)
+    if instance._Exists(instance_only=True):
+      logging.info('Found instance: %s', instance)
+  else:
+    logging.info('No instance; will create in Prepare.')
 
 
 def Prepare(benchmark_spec):
@@ -112,16 +129,29 @@ def Prepare(benchmark_spec):
   """
   benchmark_spec.always_call_cleanup = True
 
+  instance_name = FLAGS.cloud_spanner_instance_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
   benchmark_spec.spanner_instance = gcp_spanner.GcpSpannerInstance(
-      name=BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri,
+      name=instance_name,
       description=BENCHMARK_DESCRIPTION,
       database=BENCHMARK_DATABASE,
       ddl=BENCHMARK_SCHEMA)
-  if benchmark_spec.spanner_instance._Exists(instance_only=True):
-    logging.warning('Cloud Spanner instance %s exists, delete it first.' %
-                    FLAGS.cloud_spanner_ycsb_instance)
-    benchmark_spec.spanner_instance.Delete()
-  benchmark_spec.spanner_instance.Create()
+
+  # If instance name is provided, we might re-use an existing instance
+  if FLAGS.cloud_spanner_instance_name:
+    if benchmark_spec.spanner_instance._Exists(instance_only=True):
+      logger.info("Re-using existing instance %s", instance_name)
+    else:
+      logger.info("Creating new instance %s", instance_name)
+      benchmark_spec.spanner_instance.Create()
+
+  # If instance name is not provided, we delete the existing instance before creating
+  elif benchmark_spec.spanner_instance._Exists(instance_only=True):
+        logging.warning('Cloud Spanner instance %s exists, delete it first.' %
+                        instance_name)
+        benchmark_spec.spanner_instance.Delete()
+        logger.info("Creating new instance %s", instance_name)
+        benchmark_spec.spanner_instance.Create()
+
   if not benchmark_spec.spanner_instance._Exists():
     logging.warning('Failed to create Cloud Spanner instance and database.')
     benchmark_spec.spanner_instance.Delete()

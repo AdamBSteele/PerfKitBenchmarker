@@ -3,8 +3,8 @@
 benchmarks:
   - cloud_spanner_ycsb:
       flags:
-        # TODO Skip the load stage, which is done using load.yaml
-        # ycsb_skip_load_stage: True
+        # Skip the load stage, which is done using load.yaml
+        ycsb_skip_load_stage: True
 
         # Provisioning: 2 GCE VM clients
         zones: us-central1-b

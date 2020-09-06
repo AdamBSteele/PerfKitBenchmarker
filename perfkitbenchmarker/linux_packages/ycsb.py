@@ -202,7 +202,7 @@ flags.DEFINE_integer('ycsb_dynamic_load_sustain_timelimit', 300,
 # Default loading thread count for non-batching backends.
 DEFAULT_PRELOAD_THREADS = 32
 
-# Customer YCSB tar url. If not set, the official YCSB release will be used.
+# Custom YCSB tar url. If not set, the official YCSB release will be used.
 _ycsb_tar_url = None
 
 

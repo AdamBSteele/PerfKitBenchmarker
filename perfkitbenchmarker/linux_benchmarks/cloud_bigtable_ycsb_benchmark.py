@@ -357,7 +357,7 @@ def Prepare(benchmark_spec):
     ycsb.SetYcsbTarUrl(YCSB_BIGTABLE_TABLE_SHARING_TAR_URL)
 
   # TODO: in the future, it might be nice to change this so that
-  # a gcp_bigtable.GcpBigtableInstance can be created with an
+  # a gcp_bigtable.GcpBigtableInstance can be created with a
   # flag that says don't create/delete the instance.  That would
   # reduce the code paths here.
   if FLAGS.google_bigtable_instance_name is None:
