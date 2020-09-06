@@ -7,8 +7,8 @@ benchmarks:
         ycsb_skip_run_stage: True
 
         # Point to the existing 3-node Spanner cluster
-        could_spanner_instance_name: pkb-three-node-benchmarks
-        could_spanner_static_table_name: test_data
+        cloud_spanner_instance_name: pkb-three-node-benchmarks
+        cloud_spanner_static_table_name: test_data
 
         # Provisioning: 5 GCE VM clients to load
         zones: us-central1-b
