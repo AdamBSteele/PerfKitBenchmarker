@@ -1,0 +1,39 @@
+# Spanner latency benchmark PKB configuration
+# Use the --ycsb_workload_files arg to provide a workload when running
+benchmarks:
+  - cloud_spanner_ycsb:
+      flags:
+        # TODO Skip the load stage, which is done using load.yaml
+        # ycsb_skip_load_stage: True
+
+        # Provisioning: 3 GCE VM clients
+        zones: us-central1-b
+        machine_type: n1-highcpu-16
+        gce_network_name: default
+        ycsb_client_vms: 3
+
+        # 3 node Spanner cluster
+        cloud_spanner_config: regional-us-central1
+        cloud_spanner_nodes: 3
+
+        # Run Phase: Run for 30min by setting very high operation_count
+        ycsb_timelimit: 1800 # 30 minutes
+        ycsb_operation_count: 100000000 # Very high
+        # One thread per core to minimize latency
+        ycsb_threads_per_client: "16"
+        ycsb_run_parameters: requestdistribution=zipfian,dataintegrity=true
+
+        # Data size: 1 column per row, row size 1KB, 100GB total size
+        ycsb_field_count: 1
+        ycsb_field_length: 1000
+        ycsb_record_count: 100000000
+        ycsb_preload_threads: "320"
+
+        # Workload file commented out so users can provide their own
+        ycsb_workload_files: workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada
+
+
+        # Lock environment to a particular version
+        ycsb_version: 0.17.0
+
+        ycsb_measurement_type: hdrhistogram
