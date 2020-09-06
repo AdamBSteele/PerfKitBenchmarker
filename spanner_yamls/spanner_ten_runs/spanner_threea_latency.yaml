@@ -31,6 +31,7 @@ benchmarks:
 
         # Workload file commented out so users can provide their own
         ycsb_workload_files: workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada
+        ycsb_tar_url: https://storage.googleapis.com/Fexternally_shared_files/ycsb-0.18.0-SNAPSHOT.tar.gz
 
 
         # Lock environment to a particular version
