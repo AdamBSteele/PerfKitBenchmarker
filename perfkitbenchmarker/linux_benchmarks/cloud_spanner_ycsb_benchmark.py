@@ -77,9 +77,6 @@ flags.DEFINE_enum('cloud_spanner_ycsb_client_type', 'java', ['java', 'go'],
 flags.DEFINE_string('cloud_spanner_instance_name', None,
                     'Spanner instance name. If not specified, new instance '
                     'will be created and deleted on the fly.')
-flags.DEFINE_string('cloud_spanner_static_table_name', None,
-                    'Spanner table name. If not specified, a temporary table '
-                    'will be created and deleted on the fly.')
 flags.DEFINE_integer('cloud_spanner_ycsb_batchinserts',
                      1,
                      'The Cloud Spanner batch inserts used in the YCSB '
@@ -169,10 +166,9 @@ def Run(benchmark_spec):
     A list of sample.Sample instances.
   """
   vms = benchmark_spec.vms
-  table = FLAGS.cloud_spanner_static_table_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
   instance_name = FLAGS.cloud_spanner_instance_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
   run_kwargs = {
-      'table': table,
+      'table': BENCHMARK_TABLE,
       'zeropadding': BENCHMARK_ZERO_PADDING,
       'cloudspanner.instance': instance_name,
       'cloudspanner.database': BENCHMARK_DATABASE,

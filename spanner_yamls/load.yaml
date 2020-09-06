@@ -6,7 +6,6 @@ benchmarks:
 
         # Point to the existing 3-node Spanner cluster
         cloud_spanner_instance_name: pkb-three-node-benchmarks
-        cloud_spanner_static_table_name: test_data
         cloud_spanner_config: regional-us-central1
         cloud_spanner_nodes: 3
 
