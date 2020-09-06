@@ -139,9 +139,9 @@ def Prepare(benchmark_spec):
   # If instance name is provided, we might re-use an existing instance
   if FLAGS.cloud_spanner_instance_name:
     if benchmark_spec.spanner_instance._Exists(instance_only=True):
-      logger.info("Re-using existing instance %s", instance_name)
+      logging.info("Re-using existing instance %s", instance_name)
     else:
-      logger.info("Creating new instance %s", instance_name)
+      logging.info("Creating new instance %s", instance_name)
       benchmark_spec.spanner_instance.Create()
 
   # If instance name is not provided, we delete the existing instance before creating
@@ -149,7 +149,7 @@ def Prepare(benchmark_spec):
         logging.warning('Cloud Spanner instance %s exists, delete it first.' %
                         instance_name)
         benchmark_spec.spanner_instance.Delete()
-        logger.info("Creating new instance %s", instance_name)
+        logging.info("Creating new instance %s", instance_name)
         benchmark_spec.spanner_instance.Create()
 
   if not benchmark_spec.spanner_instance._Exists():
