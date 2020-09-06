@@ -1370,10 +1370,12 @@ class YCSBExecutor(object):
     """
     load_samples = []
     if not FLAGS.ycsb_skip_load_stage:
+      logging.info("Beginning Load Stage")
       load_samples = self.Load(vms, workloads=workloads,
                                load_kwargs=load_kwargs)
     run_samples = []
     if not FLAGS.ycsb_skip_run_stage:
+      logging.info("Beginning Run Stage")
       run_samples = self.Run(vms, workloads=workloads,
                              run_kwargs=run_kwargs)
     return load_samples + run_samples

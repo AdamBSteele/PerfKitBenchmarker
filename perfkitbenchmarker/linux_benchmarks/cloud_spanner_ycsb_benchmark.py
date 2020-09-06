@@ -107,17 +107,6 @@ def CheckPrerequisites(benchmark_config):
   for scope in REQUIRED_SCOPES:
     if scope not in FLAGS.gcloud_scopes:
       raise ValueError('Scope {0} required.'.format(scope))
-  # TODO: extract from gcloud config if available.
-  if FLAGS.cloud_spanner_instance_name:
-    instance = gcp_spanner.GcpSpannerInstance(
-                  name=FLAGS.cloud_spanner_instance_name,
-                  description=BENCHMARK_DESCRIPTION,
-                  database=BENCHMARK_DATABASE,
-                  ddl=BENCHMARK_SCHEMA)
-    if instance._Exists(instance_only=True):
-      logging.info('Found instance: %s', instance)
-  else:
-    logging.info('No instance; will create in Prepare.')
 
 
 def Prepare(benchmark_spec):
@@ -127,6 +116,7 @@ def Prepare(benchmark_spec):
     benchmark_spec: The benchmark specification. Contains all data that is
         required to run the benchmark.
   """
+
   benchmark_spec.always_call_cleanup = True
 
   instance_name = FLAGS.cloud_spanner_instance_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
@@ -138,6 +128,7 @@ def Prepare(benchmark_spec):
 
   # If instance name is provided, we might re-use an existing instance
   if FLAGS.cloud_spanner_instance_name:
+    benchmark_spec.always_call_cleanup = False
     if benchmark_spec.spanner_instance._Exists(instance_only=True):
       logging.info("Re-using existing instance %s", instance_name)
     else:
@@ -178,8 +169,9 @@ def Run(benchmark_spec):
     A list of sample.Sample instances.
   """
   vms = benchmark_spec.vms
+  table = FLAGS.cloud_spanner_static_table_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
   run_kwargs = {
-      'table': BENCHMARK_TABLE,
+      'table': table,
       'zeropadding': BENCHMARK_ZERO_PADDING,
       'cloudspanner.instance': BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri,
       'cloudspanner.database': BENCHMARK_DATABASE,

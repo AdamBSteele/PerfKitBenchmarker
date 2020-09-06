@@ -1,6 +1,4 @@
-# PKB Configuration to load data into a Bigtable instance for running benchmarks
-# Use the latency.yaml and throughput.yaml files in this directory
-# to run benchmarks against this instance.
+# PKB Configuration to load data into a Spanner instance for running benchmarks
 benchmarks:
   - cloud_spanner_ycsb:
       flags:
@@ -9,6 +7,8 @@ benchmarks:
         # Point to the existing 3-node Spanner cluster
         cloud_spanner_instance_name: pkb-three-node-benchmarks
         cloud_spanner_static_table_name: test_data
+        cloud_spanner_config: regional-us-central1
+        cloud_spanner_nodes: 3
 
         # Provisioning: 5 GCE VM clients to load
         zones: us-central1-b
@@ -22,7 +22,7 @@ benchmarks:
         ycsb_record_count: 100000000
 
         ycsb_preload_threads: "320"
+        ycsb_workload_files: workloada
 
         # Lock environment to a particular version
         ycsb_version: 0.17.0
-
