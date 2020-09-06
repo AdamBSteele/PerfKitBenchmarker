@@ -22,7 +22,6 @@ benchmarks:
         ycsb_record_count: 100000000
 
         ycsb_preload_threads: "320"
-        ycsb_workload_files: workloada
 
         # Lock environment to a particular version
         ycsb_version: 0.17.0

@@ -170,10 +170,11 @@ def Run(benchmark_spec):
   """
   vms = benchmark_spec.vms
   table = FLAGS.cloud_spanner_static_table_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
+  instance_name = FLAGS.cloud_spanner_instance_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
   run_kwargs = {
       'table': table,
       'zeropadding': BENCHMARK_ZERO_PADDING,
-      'cloudspanner.instance': BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri,
+      'cloudspanner.instance': instance_name,
       'cloudspanner.database': BENCHMARK_DATABASE,
       'cloudspanner.readmode': FLAGS.cloud_spanner_ycsb_readmode,
       'cloudspanner.boundedstaleness':
