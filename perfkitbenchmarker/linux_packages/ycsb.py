@@ -308,6 +308,7 @@ def _Install(vm):
   vm.Install('curl')
   ycsb_url = (_ycsb_tar_url or FLAGS.ycsb_tar_url or
               YCSB_URL_TEMPLATE.format(FLAGS.ycsb_version))
+  logging.warn(ycsb_url)
   install_cmd = ('mkdir -p {0} && curl -L {1} | '
                  'tar -C {0} --strip-components=1 -xzf -')
   vm.RemoteCommand(install_cmd.format(YCSB_DIR, ycsb_url))

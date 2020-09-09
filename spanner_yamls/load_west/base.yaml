@@ -1,0 +1,28 @@
+# Aiming for 3.4k QPS/node at <200ms latency
+
+# metadata|test:throughput,workload:a
+benchmarks:
+  - cloud_spanner_ycsb:
+      flags:
+        ycsb_skip_run_stage: True
+
+        gce_network_name: default
+
+        # VMs
+        zones: us-west1-b
+        machine_type: n1-standard-16
+        ycsb_preload_threads: "320"
+        zones: us-west1-b
+        gce_network_name: default
+
+        # Spanner
+        cloud_spanner_config: regional-us-west1
+
+        # Data size: 1 column per row, row size 1KB, 100GB total size
+        ycsb_field_count: 1
+        ycsb_field_length: 1000
+
+        ycsb_tar_url: https://storage.googleapis.com/externally_shared_files/ycsb-0.18.0-SNAPSHOT.tar.gz
+
+        ycsb_preload_threads: "320"
+        ycsb_measurement_type: hdrhistogram

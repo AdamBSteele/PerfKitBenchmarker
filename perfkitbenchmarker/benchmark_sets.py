@@ -312,11 +312,13 @@ def PackageModule(package_name):
 
 def _GetBenchmarksFromUserConfig(user_config):
   """Returns a list of benchmark module, config tuples."""
+  print(user_config)
   benchmarks = user_config.get('benchmarks', [])
   valid_benchmarks = _GetValidBenchmarks()
   benchmark_config_list = []
 
   for entry in benchmarks:
+    print(entry)
     name, user_config = entry.popitem()
     try:
       benchmark_module = valid_benchmarks[name]

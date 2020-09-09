@@ -31,7 +31,7 @@ benchmarks:
         ycsb_preload_threads: "320"
 
         # Workload file commented out so users can provide their own
-        ycsb_workload_files: workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada,workloada
+        ycsb_workload_files: workloada,workloada,workloada,workloada,workloada
         # Lock environment to a particular version
         ycsb_tar_url: https://storage.googleapis.com/externally_shared_files/ycsb-0.18.0-SNAPSHOT.tar.gz
 

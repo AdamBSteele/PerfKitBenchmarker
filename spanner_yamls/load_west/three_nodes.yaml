@@ -1,0 +1,8 @@
+#import ./spanner_yamls/load_west/base.yaml
+
+        cloud_spanner_instance_name: pkb-three-node-benchmarks-west1
+        cloud_spanner_nodes: 3
+        ycsb_record_count: 100000000      
+        ycsb_client_vms: 3
+
+metadata: "test:load"

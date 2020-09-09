@@ -5,7 +5,7 @@ benchmarks:
         ycsb_skip_run_stage: True
 
         # Point to the existing 3-node Spanner cluster
-        cloud_spanner_instance_name: pkb-three-node-benchmarks
+        cloud_spanner_instance_name: pkb-three-node-benchmarks-two
         cloud_spanner_config: regional-us-central1
         cloud_spanner_nodes: 3
 
