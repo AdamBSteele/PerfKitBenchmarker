@@ -6,17 +6,18 @@ benchmarks:
       flags:
         ycsb_skip_run_stage: True
 
-        # Spanner
         cloud_spanner_config: regional-us-west1
+        cloud_spanner_nodes: 3
 
-        gce_network_name: default
+        ycsb_record_count: 100000000
+        ycsb_client_vms: 3
 
         # VMs
         zones: us-west1-b
         machine_type: n1-standard-8
+        gce_network_name: default
         ycsb_preload_threads: "320"
         zones: us-west1-b
-        gce_network_name: default
 
         # Data size: 1 column per row, row size 1KB, 100GB total size
         ycsb_field_count: 1

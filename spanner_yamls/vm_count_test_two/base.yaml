@@ -1,0 +1,27 @@
+# metadata | test_group_name:vm_count_test,test_type:throughput
+benchmarks:
+  - cloud_spanner_ycsb:
+      flags:
+        ycsb_skip_load_stage: True
+
+        zones: us-central1-b
+        ycsb_threads_per_client: "10"
+        machine_type: n1-standard-1
+        gce_network_name: default
+      
+        cloud_spanner_config: regional-us-central1
+
+        # Run Phase: Run for 30min by setting very high operation_count
+        ycsb_timelimit: 1800 # 30 minutes
+        ycsb_operation_count: 100000000 # Very high     
+
+        # Data size: 1 column per row, row size 1KB, 300GB total size
+        ycsb_field_count: 1
+        ycsb_field_length: 1000
+        ycsb_record_count: 100000000
+
+        ycsb_workload_files: workloada,workloada,workloada,workloada,workloada
+
+        ycsb_measurement_type: hdrhistogram
+        
+        ycsb_tar_url: https://storage.googleapis.com/externally_shared_files/ycsb-0.18.0-SNAPSHOT.tar.gz

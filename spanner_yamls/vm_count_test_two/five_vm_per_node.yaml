@@ -1,0 +1,7 @@
+#import ./spanner_yamls/vm_count_test/base.yaml
+
+        cloud_spanner_instance_name: pkb-three-node-benchmarks
+        ycsb_client_vms: 15
+        ycsb_run_parameters: target=700,requestdistribution=zipfian,dataintegrity=true
+
+# metadata | test_name:five_vm_per_node

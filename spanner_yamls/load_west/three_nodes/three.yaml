@@ -1,0 +1,3 @@
+#import ./spanner_yamls/load_west/three_nodes/base.yaml
+
+        cloud_spanner_instance_name: pkb-three-node-benchmarks-west3
