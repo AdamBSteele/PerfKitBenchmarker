@@ -1,4 +1,4 @@
-#import ./spanner_yamls/vm_count_test/base.yaml
+#import ./spanner_yamls/vm_count_test_two/base.yaml
 
         cloud_spanner_instance_name: pkb-three-node-benchmarks-two
         ycsb_client_vms: 30
