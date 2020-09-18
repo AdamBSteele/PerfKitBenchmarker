@@ -70,6 +70,15 @@ def build_args_list(fp, metadata):
 
 if __name__ == '__main__':
     arg = sys.argv[1]
+
+    if '--full_suite' in sys.argv:
+        assert os.path.isfile(sys.argv[1])
+        base_file = sys.argv[1]
+        instances = ["pkb-three-node-benchmarks",
+                     "pkb-three-node-benchmarks-two",
+                     "pkb-three-node-benchmarks-three",
+                     "pkb-three-node-benchmarks-four"]
+
     if os.path.isfile(sys.argv[1]):
         run_file()
     elif os.path.isdir(sys.argv[1]):
