@@ -1,0 +1,27 @@
+ python multi_run.py --a=b --c=d
+ python multi_run.py --a=b --c=d
+ python multi_run.py 
+ python multi_run.py 
+ nohup python multi_run.py &
+ python multi_run.py 
+ python multi_run.py 
+ python multi_run.py 
+ nohup python multi_run.py > /tmp/nohup.out & 
+ nohup python multi_run.py > /tmp/nohup.out & 
+ python multi_run.py 
+ python multi_run.py ./spanner_yamls/vm_count_test/
+ python multi_run.py ./spanner_yamls/vm_count_test/
+ python multi_run.py 
+ python multi_run.py spanner_yamls/vm_count_test/
+ nohup python multi_run.py spanner_yamls/vm_count_test/ >/tmp/nohup.out &
+ nohup python multi_run.py spanner_yamls/vm_count_test/ >/tmp/nohup.out &
+ nohup python multi_run.py spanner_yamls/vm_count_test/ >/tmp/nohup.out &
+ python multi_run.py spanner_yamls/vm_count_test/
+ python multi_run.py 
+ python multi_run.py spanner_yamls/vm_count_test/
+ python multi_run.py spanner_yamls/vm_count_test/ --bigquery_table=pkb_results.multi_runs
+ nohup python multi_run.py spanner_yamls/vm_count_test_two/ --bigquery_table=pkb_results.multi_runs > /tmp/vm_count_test_two.log &
+ nohup python multi_run.py spanner_yamls/vm_count_test_two/ --bigquery_table=pkb_results.multi_runs > /tmp/vm_count_test_two.log &
+ nohup python multi_run.py spanner_yamls/vm_count_test_two/ten_vm_per_node.yaml & /tmp/ten.log
+ python multi_run.py spanner_yamls/vm_count_test_two/ten_vm_per_node.yaml 
+ cat multi_run.py 
