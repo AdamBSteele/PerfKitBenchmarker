@@ -24,7 +24,7 @@ def run_directory():
     base_metadata = ''
     if 'base.yaml' in files:
         print('Found base file. Extracting base_metadata')
-        base_metadata = find_metdata(os.path.join(folder, 'base.yaml'))
+        base_metadata = find_metdata(os.path.join(folder, 'base.yaml')) = "|"
         files.remove('base.yaml')
 
     with Pool(3) as p:
