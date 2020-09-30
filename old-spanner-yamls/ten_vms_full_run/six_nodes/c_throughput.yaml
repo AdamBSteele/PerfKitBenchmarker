@@ -1,0 +1,6 @@
+#import ./spanner_yamls/vm_count_test/base.yaml
+
+        # C Throughput with 
+        ycsb_run_parameters: target=1000,requestdistribution=zipfian,dataintegrity=true
+
+# metadata|test:load

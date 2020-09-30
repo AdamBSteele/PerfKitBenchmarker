@@ -4,7 +4,7 @@ import sys
 from multiprocessing import Pool
 
 
-def find_metdata(fp):
+def find_metadata(fp):
     metadata = ''
     with open(fp) as f:
         for line in f.readlines():
@@ -24,7 +24,7 @@ def run_directory():
     base_metadata = ''
     if 'base.yaml' in files:
         print('Found base file. Extracting base_metadata')
-        base_metadata = find_metdata(os.path.join(folder, 'base.yaml')) = "|"
+        base_metadata = find_metadata(os.path.join(folder, 'base.yaml'))
         files.remove('base.yaml')
 
     with Pool(3) as p:
@@ -32,7 +32,9 @@ def run_directory():
 
         for f in files:
             fp = os.path.join(folder, f)
-            metadata = ','.join([base_metadata, find_metdata(fp), 'yaml:{}'.format(f)])
+            metadata = '|'.join([base_metadata, 'yaml:{}'.format(f)])
+            if find_metadata(fp):
+                metadata = metadata + '|' + find_metadata(fp)
             args = build_args_list(fp, metadata)
             parallel_tests.append(args)
 
@@ -46,8 +48,8 @@ def run_file():
     metadata = ''
     base_path = os.path.join(folder, 'base.yaml')
     if os.path.isfile(base_path):
-        metadata += find_metdata(base_path)
-    metadata += find_metdata(fp)
+        metadata += find_metadata(base_path)
+    metadata += find_metadata(fp)
     args = build_args_list(fp, metadata)
     subprocess.call(args)
 
@@ -62,7 +64,7 @@ def build_args_list(fp, metadata):
         args.append('--bigquery_table=pkb_results.multi_runs')
 
     if '--run_uri' not in ''.join(args):
-        run_uri = fp[:-5].replace('.', '').replace('_', '')[-12:]
+        run_uri = fp[:-5].replace('.', '').replace('_', '').replace('/', '')[-12:]
         args.append('--run_uri={}'.format(run_uri))
     print(args)
     return args
@@ -85,3 +87,25 @@ if __name__ == '__main__':
         run_directory()
     else:
         print("File not found")
+
+    base_yaml = './spanner_yamls/base.yaml'
+    base_metadata = find_metadata(base_yaml)
+    for test in ['throughput', 'latency']:
+        for workload in ['a', 'b', 'c', 'd']:
+            workload_yaml 
+            with Pool(3) as p:
+
+                parallel_tests = []
+                for node_count in ['three', 'six', 'nine']:
+
+
+
+                for f in files:
+                    fp = os.path.join(folder, f)
+                    metadata = '|'.join([base_metadata, 'yaml:{}'.format(f)])
+                    if find_metadata(fp):
+                        metadata = metadata + '|' + find_metadata(fp)
+                    args = build_args_list(fp, metadata)
+                    parallel_tests.append(args)
+
+                p.map(subprocess.call, parallel_tests)

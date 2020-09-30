@@ -1,0 +1,28 @@
+# Spanner latency benchmark PKB configuration
+# Use the --ycsb_workload_files arg to provide a workload when running
+benchmarks:
+  - cloud_spanner_ycsb:
+      flags:
+        ycsb_skip_load_stage: True
+
+        # Provisioning: 60 GCE VM clients
+        zones: us-central1-b
+        machine_type: n1-highcpu-16
+        gce_network_name: default
+        ycsb_client_vms: 60
+
+        # 60 node Spanner cluster
+        cloud_spanner_config: regional-us-central1
+        cloud_spanner_nodes: 6
+
+        # Run Phase: Run for 30min by setting very high operation_count
+        ycsb_timelimit: 1800 # 30 minutes
+        ycsb_operation_count: 100000000 # Very high
+
+        # Data size: 1 column per row, row size 1KB, 100GB total size
+        ycsb_field_count: 1
+        ycsb_field_length: 1000
+        ycsb_record_count: 100000000
+        ycsb_preload_threads: "320"
+
+# metadata|test:throughput

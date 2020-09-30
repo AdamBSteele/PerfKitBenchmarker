@@ -1,0 +1,29 @@
+benchmarks:
+  - cloud_spanner_ycsb:
+      flags:
+        ycsb_reload_database: True
+
+        # Spanner
+        cloud_spanner_config: regional-us-west1
+        gce_network_name: default
+
+        # VMs
+        machine_type: n1-standard-1
+        ycsb_preload_threads: "320"
+
+        # Data size: 1 column per row, row size 1KB, 100GB total size
+        ycsb_field_count: 1
+        ycsb_field_length: 1000
+
+        ycsb_version: 0.17.0
+
+        cloud_spanner_instance_name: pkb-nine-node-benchmarks-west3
+        cloud_spanner_instance_description: "9-Node YCSB us-west1 (3)"
+        cloud_spanner_nodes: 9
+        ycsb_record_count: 300000000
+        ycsb_client_vms: 90
+        zones: us-west1-a,us-west1-b,us-west1-c
+
+        # Do 100 Reads for fun
+        ycsb_workload_files: workloadc
+        ycsb_operation_count: 100

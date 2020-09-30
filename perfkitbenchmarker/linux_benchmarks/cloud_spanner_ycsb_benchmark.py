@@ -50,15 +50,6 @@ BENCHMARK_SCHEMA = """
 CREATE TABLE %s (
   id     STRING(MAX),
   field0 STRING(MAX),
-  field1 STRING(MAX),
-  field2 STRING(MAX),
-  field3 STRING(MAX),
-  field4 STRING(MAX),
-  field5 STRING(MAX),
-  field6 STRING(MAX),
-  field7 STRING(MAX),
-  field8 STRING(MAX),
-  field9 STRING(MAX),
 ) PRIMARY KEY(id)
 """ % BENCHMARK_TABLE
 
@@ -77,6 +68,8 @@ flags.DEFINE_enum('cloud_spanner_ycsb_client_type', 'java', ['java', 'go'],
 flags.DEFINE_string('cloud_spanner_instance_name', None,
                     'Spanner instance name. If not specified, new instance '
                     'will be created and deleted on the fly.')
+flags.DEFINE_string('cloud_spanner_instance_description', None,
+                    'Spanner instance name. Used if creating a new instance.')
 flags.DEFINE_integer('cloud_spanner_ycsb_batchinserts',
                      1,
                      'The Cloud Spanner batch inserts used in the YCSB '
@@ -114,12 +107,13 @@ def Prepare(benchmark_spec):
         required to run the benchmark.
   """
 
-  benchmark_spec.always_call_cleanup = True
+  benchmark_spec.always_call_cleanup = True if not FLAGS.cloud_spanner_instance_name else False
 
   instance_name = FLAGS.cloud_spanner_instance_name or BENCHMARK_INSTANCE_PREFIX + FLAGS.run_uri
+  instance_description = FLAGS.cloud_spanner_instance_description or BENCHMARK_DESCRIPTION
   benchmark_spec.spanner_instance = gcp_spanner.GcpSpannerInstance(
       name=instance_name,
-      description=BENCHMARK_DESCRIPTION,
+      description=instance_description,
       database=BENCHMARK_DATABASE,
       ddl=BENCHMARK_SCHEMA)
 

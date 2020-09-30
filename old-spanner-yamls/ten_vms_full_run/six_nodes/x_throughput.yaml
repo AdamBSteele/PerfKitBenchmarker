@@ -1,0 +1,7 @@
+#import ./spanner_yamls/vm_count_test/base.yaml
+        ycsb_client_vms: 30
+
+        # Target = (2k QPS/node * 3 nodes) = 6k QPS / 30 VMs  = 200
+        ycsb_run_parameters: target=200,requestdistribution=zipfian,dataintegrity=true
+
+# metadata|test:load

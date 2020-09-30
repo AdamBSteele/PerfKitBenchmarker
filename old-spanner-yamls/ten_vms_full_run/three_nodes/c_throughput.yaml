@@ -1,0 +1,6 @@
+#import .spanner_yamls/ten_vms_full_run/three_nodes/base.yaml
+
+        # Target = (10k QPS/node * 3 nodes) = 30k QPS / 30 VMs  = 1000
+        ycsb_run_parameters: target=1000,requestdistribution=zipfian,dataintegrity=true
+
+# metadata|test:throughput

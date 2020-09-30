@@ -1,0 +1,4 @@
+#import ./spanner_yamls/vm_count_test/base.yaml
+        ycsb_run_parameters: target=333,requestdistribution=zipfian,dataintegrity=true
+
+# metadata|test:load
